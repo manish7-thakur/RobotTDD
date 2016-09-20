@@ -1,12 +1,22 @@
+package com.xebia;
+
 import com.xebia.Item;
-import com.xebia.ItemBuilder;
+import com.xebia.builders.ItemBuilder;
 import com.xebia.Robot;
 import com.xebia.exception.CannotWalkException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class RobotTest {
-    Robot r  = new Robot();
+    private Robot r;
+    private ItemBuilder itemBuilder;
+
+    @Before
+    public void setUp() {
+        r = new Robot();
+        itemBuilder = new ItemBuilder();
+    }
 
     @Test
     public void initialDisplayWelcome() {
@@ -29,6 +39,7 @@ public class RobotTest {
         r.walk(3);
         Assert.assertEquals(r.isRedLightOn(), false);
     }
+
     @Test
     public void redLightOn() throws CannotWalkException {
         r.walk(4.5);
@@ -50,30 +61,49 @@ public class RobotTest {
 
     @Test(expected = CannotWalkException.class)
     public void walkingWithTooMuchWeight() throws CannotWalkException {
-        r.putWeight(11);
+        r.putWeight(12);
         r.walk(1);
     }
 
     @Test
-    public void barCodeScanReturns20(){
-        Item item = ItemBuilder.withBarCode("5555");
+    public void barCodeScanReturns20() {
+
+        Item item = itemBuilder.withBarCode("5555")
+                .withName("Some name").get();
         r.scan(item);
         Assert.assertEquals("20", r.getCurrentStatus());
     }
+
     @Test
-    public void barCodeScanReturns40(){
-        Item item = ItemBuilder.withBarCode("88888");
+    public void barCodeScanReturns40() {
+        Item item = itemBuilder.withBarCode("88888")
+                .withName("Some other name").get();
         r.scan(item);
         Assert.assertEquals("40", r.getCurrentStatus());
     }
 
     @Test
-    public void displayStatusScanFailure(){
+    public void displayStatusScanFailure() {
 
-        Item item = ItemBuilder.withBarCode("blurred12434");
+        Item item = itemBuilder.withBarCode("blurred12434").get();
         r.scan(item);
-        Assert.assertEquals("Scan Failure",r.getCurrentStatus()
+        Assert.assertEquals("Scan Failure", r.getCurrentStatus()
         );
     }
+
+    @Test
+    public void walkingWith3andAHalfKm() throws CannotWalkException {
+        r.walk(3.5);
+        Assert.assertEquals(30, r.getBattery(), 0.5);
+    }
+
+
+    @Test
+    public void walkingWith2kmAnd3KgWeight() throws CannotWalkException {
+        r.putWeight(3);
+        r.walk(2);
+        Assert.assertEquals(54, r.getBattery(), 0.5);
+    }
+
 
 }

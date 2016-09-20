@@ -1,12 +1,9 @@
 package com.xebia;
 
-/**
- * Created by mthakur on 20/09/16.
- */
 public class Item {
 
-
     private String barCode;
+    private String name;
 
     public String getBarCode() {
         return barCode;
@@ -14,5 +11,9 @@ public class Item {
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
