@@ -33,13 +33,20 @@ public class Robot {
 
     private void checkAndStatusAfterWalk(double distanceInKM) {
         double distanceInMeters = distanceInKM * 1000;
-        battery = battery - 2 * distanceInMeters / 100;
+        battery = battery - (2 * distanceInMeters / 100);
+        battery -= currentLoad * 2;
         if(battery < 15) {
             setRedLightOn();
         }
     }
 
+
     private void setRedLightOn() {
         redLightOn = true;
+    }
+
+    public double getBattery() {
+
+        return battery;
     }
 }
