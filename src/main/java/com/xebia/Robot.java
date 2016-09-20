@@ -61,8 +61,13 @@ public class Robot {
 
     public void scan(Item item) {
         String barcode = item.getBarCode();
-        setCurrentStatus(BarCodeHelper.scanBarCode(barcode
-        ));
+        try {
+            String price = BarCodeHelper.scanBarCode(barcode);
+            setCurrentStatus(price);
+        }catch(NumberFormatException e){
+            setCurrentStatus("Scan Failure");
+        }
+
     }
 
     public void setCurrentStatus(String currentStatus) {

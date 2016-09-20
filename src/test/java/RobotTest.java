@@ -67,5 +67,13 @@ public class RobotTest {
         Assert.assertEquals("40", r.getCurrentStatus());
     }
 
+    @Test
+    public void displayStatusScanFailure(){
+
+        Item item = ItemBuilder.withBarCode("blurred12434");
+        r.scan(item);
+        Assert.assertEquals("Scan Failure",r.getCurrentStatus()
+        );
+    }
 
 }
