@@ -13,6 +13,7 @@ public class Robot {
         return currentStatus;
     }
 
+
     public void putWeight(int i) {
         this.currentLoad += i;
         checkAndSetDisplayStatus();
@@ -56,5 +57,15 @@ public class Robot {
     public double getBattery() {
 
         return battery;
+    }
+
+    public void scan(Item item) {
+        String barcode = item.getBarCode();
+        setCurrentStatus(BarCodeHelper.scanBarCode(barcode
+        ));
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
     }
 }

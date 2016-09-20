@@ -1,3 +1,5 @@
+import com.xebia.Item;
+import com.xebia.ItemBuilder;
 import com.xebia.Robot;
 import com.xebia.exception.CannotWalkException;
 import org.junit.Assert;
@@ -5,7 +7,6 @@ import org.junit.Test;
 
 public class RobotTest {
     Robot r  = new Robot();
-
 
     @Test
     public void initialDisplayWelcome() {
@@ -51,6 +52,19 @@ public class RobotTest {
     public void walkingWithTooMuchWeight() throws CannotWalkException {
         r.putWeight(11);
         r.walk(1);
+    }
+
+    @Test
+    public void barCodeScanReturns20(){
+        Item item = ItemBuilder.withBarCode("5555");
+        r.scan(item);
+        Assert.assertEquals("20", r.getCurrentStatus());
+    }
+    @Test
+    public void barCodeScanReturns40(){
+        Item item = ItemBuilder.withBarCode("88888");
+        r.scan(item);
+        Assert.assertEquals("40", r.getCurrentStatus());
     }
 
 
