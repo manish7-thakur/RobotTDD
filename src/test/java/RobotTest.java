@@ -21,4 +21,10 @@ public class RobotTest {
         Assert.assertEquals(r.isRedLightOn(), false);
     }
 
+    @Test
+    public void redLightOn() {
+        r.walk(4.5);
+        Assert.assertEquals(r.isRedLightOn(), true);
+    }
+
 }
