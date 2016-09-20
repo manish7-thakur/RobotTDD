@@ -1,5 +1,7 @@
 package com.xebia;
 
+import com.xebia.exception.CannotWalkException;
+
 public class Robot {
 
     private int currentLoad = 0 ;
@@ -26,8 +28,14 @@ public class Robot {
         return redLightOn;
     }
 
-    public void walk(double distanceInKM) {
+    public void walk(double distanceInKM) throws CannotWalkException {
+
+        if(currentLoad > 10)
+        {
+            throw new CannotWalkException();
+        }
         System.out.println("Walking distanceInKM....." + distanceInKM);
+
         checkAndStatusAfterWalk(distanceInKM);
     }
 
